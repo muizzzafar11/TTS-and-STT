@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                         button.setEnabled(true);
                     }
                 }
+                //giving a prompt for error
                 else{
                     Log.e("TTS", "Initialization Failed");
                 }
@@ -57,8 +58,36 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
+    //method for converting text to speech
     private void speak(){
-        
+    //declaring a string for the conversion of text to speech
+        String text2 = text.getText().toString();
+        float pitch2 = (float) pitch.getProgress() / 50 ;
+        //so that the pitch is not at zero
+        if ((pitch2 < 0.1)){
+            pitch2 = 0.1f;
+        }
+        else if (pitch2 > 100) {
+            pitch2 = 100f;
+        }
+        float speed2 = (float) speed.getProgress() / 50 ;
+        if (speed2 < 0.1){
+            speed2 = 0.1f;
+        }
+
+        TTS.setPitch(pitch2);
+        TTS.setSpeechRate(speed2);
+         TTS.speak(text2,TextToSpeech.QUEUE_FLUSH,null);
+
+    }
+//method to stop the text to speech
+    @Override
+    protected void onDestroy() {
+        if(TTS != null){
+            TTS.stop();
+            TTS.shutdown();
+
+        }
+        super.onDestroy();
     }
 }
