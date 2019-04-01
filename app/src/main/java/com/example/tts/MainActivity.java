@@ -1,5 +1,6 @@
 package com.example.tts;
 
+import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         button = findViewById(R.id.button_speak);
         TTS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                     //setting the locale language to english
                     int result = TTS.setLanguage(Locale.ENGLISH);
                     //if the language is not supported
-                    //or if there os nothing in the data
+                    //or if there is nothing in the data
                     //then show the log (prompt)
                     if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
                         Log.e("TTS", "language is not supported");
@@ -57,12 +60,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        Button secondActivity = (Button) findViewById(R.id.second);
+        secondActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent secondActIntent = new Intent(getApplicationContext(),SecondActivity.class);
+                startActivity(secondActIntent);
+            }
+        });
+
     }
     //method for converting text to speech
     private void speak(){
     //declaring a string for the conversion of text to speech
         String text2 = text.getText().toString();
-        float pitch2 = (float) pitch.getProgress() / 50 ;
+        float pitch2 = (float) pitch.getProgress() /50 ;
         //so that the pitch is not at zero
         if ((pitch2 < 0.1)){
             pitch2 = 0.1f;
@@ -77,7 +90,15 @@ public class MainActivity extends AppCompatActivity {
 
         TTS.setPitch(pitch2);
         TTS.setSpeechRate(speed2);
-         TTS.speak(text2,TextToSpeech.QUEUE_FLUSH,null);
+        TTS.speak(text2,TextToSpeech.QUEUE_FLUSH,null,null);
+
+//        TTS.speak(text2,TextToSpeech.QUEUE_FLUSH,null);
+//         TTS.speak(text2,TextToSpeech.QUEUE_FLUSH,);
+
+//        public int speak(CharSequence text,
+//        int queueMode,
+//        android.os.Bundle params,
+//        String utteranceId)
 
     }
 //method to stop the text to speech

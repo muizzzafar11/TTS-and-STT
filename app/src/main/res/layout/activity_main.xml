@@ -53,7 +53,17 @@
         android:text="speak"
         android:enabled="false"
         android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
 
         />
+
+    <Button
+        android:id="@+id/second"
+        android:layout_width="379dp"
+        android:layout_height="73dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:enabled="true"
+        android:text="Speech To Text" />
 
 </LinearLayout>
